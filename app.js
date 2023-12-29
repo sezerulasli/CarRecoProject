@@ -34,6 +34,16 @@ app.get("/search/:car_brand/:car_model/:car_year", (req, res) => {
         .catch(err => console.log(err));
 });
 
+app.get("/delete/:car_brand/:car_model/:car_year", (req, res) => {
+    const { car_brand, car_model, car_year } = req.params;
+    const db = database.getDbInst();
+    const result = db.deleteData(car_brand, car_model, car_year);
+    result
+        .then(data => res.json({ data: data }))
+        .catch(err => console.log(err));
+});
+
+
 app.post("/create", (req, res, next) => {
     const { car_brand, car_model, car_year } = req.body;
     console.log(car_brand);

@@ -31,7 +31,6 @@ addBtn.onclick = function() {
                 'Content-Type': 'application/json'
             },
 
-            //make sure to serialize your JSON body
             body: JSON.stringify({
                 car_brand: addBrand,
                 car_model: addModel,
@@ -41,6 +40,19 @@ addBtn.onclick = function() {
         .then(response => response.json())
 
 }
+
+const deleteBtn = document.querySelector("#delete");
+
+deleteBtn.onclick = function() {
+    const deleteBrand = document.querySelector("#brandId").value;
+    const deleteModel = document.querySelector("#modelId").value;
+    const deleteYear = document.querySelector("#yearId").value;
+    fetch("http://localhost:3000/delete/" + deleteBrand + "/" + deleteModel + "/" + deleteYear)
+        .then(response => response.json())
+}
+
+
+
 
 function loadIndexTable(data) {
     const table = document.querySelector("#table");

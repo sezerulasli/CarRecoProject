@@ -60,6 +60,23 @@ class Db {
             throw error;
         };
     };
+
+    async deleteData(car_brand, car_model, car_year) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                con.query("DELETE FROM cars WHERE car_brand = ? AND car_model = ? AND car_year = ?", [car_brand, car_model, car_year], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result);
+                });
+            });
+            return response;
+        } catch (error) {
+            throw error;
+        };
+    };
+
+
+
 }
 
 module.exports = Db;
