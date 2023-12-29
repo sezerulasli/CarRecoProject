@@ -51,7 +51,7 @@ class Db {
         try {
             const response = await new Promise((resolve, reject) => {
                 con.query("INSERT INTO cars (car_brand, car_model, car_year) VALUES (?,?, ?)", [car_brand, car_model, car_year], (err, result) => {
-                    if (err) reject(new Error(err.message));
+                    if (err) reject(new Error("All fields are required."));
                     resolve(result);
                 });
             });
@@ -65,6 +65,20 @@ class Db {
         try {
             const response = await new Promise((resolve, reject) => {
                 con.query("DELETE FROM cars WHERE car_brand = ? AND car_model = ? AND car_year = ?", [car_brand, car_model, car_year], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result);
+                });
+            });
+            return response;
+        } catch (error) {
+            throw error;
+        };
+    };
+
+    async deleteData2(car_id) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                con.query("DELETE FROM cars WHERE car_id = ?", [car_id], (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result);
                 });

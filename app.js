@@ -34,6 +34,7 @@ app.get("/search/:car_brand/:car_model/:car_year", (req, res) => {
         .catch(err => console.log(err));
 });
 
+
 app.get("/delete/:car_brand/:car_model/:car_year", (req, res) => {
     const { car_brand, car_model, car_year } = req.params;
     const db = database.getDbInst();
@@ -43,15 +44,17 @@ app.get("/delete/:car_brand/:car_model/:car_year", (req, res) => {
         .catch(err => console.log(err));
 });
 
+app.get("/delete/:car_id", (req, res) => {
+    const { car_id } = req.params;
+    const db = database.getDbInst();
+    const result = db.deleteData2(car_id);
+    result
+        .then(data => res.json({ data: data }))
+        .catch(err => console.log(err));
+});
 
-app.post("/create", (req, res, next) => {
+app.post("/create", (req, res) => {
     const { car_brand, car_model, car_year } = req.body;
-    console.log(car_brand);
-
-    if (!car_brand || !car_year || !car_model) {
-
-        return res.status(400).json({ message: "All fields are required" });
-    };
     const db = database.getDbInst();
     db.addData(car_brand, car_model, car_year);
 

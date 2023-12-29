@@ -51,12 +51,9 @@ deleteBtn.onclick = function() {
         .then(response => response.json())
 }
 
-
-
-
 function loadIndexTable(data) {
     const table = document.querySelector("#table");
-    console.log(data);
+
     const arr = Array.from(data);
     let tableDetails = "";
     tableDetails += "<thead>";
@@ -65,6 +62,7 @@ function loadIndexTable(data) {
     tableDetails += "<th scope='col'>BRAND</th>";
     tableDetails += "<th scope='col'>MODEL</th>";
     tableDetails += "<th scope='col'>YEAR</th>";
+    tableDetails += "<th scope='col'>ACTIONS</th>";
     tableDetails += "</tr>";
     tableDetails += "</thead>";
     arr.forEach(({ car_id, car_brand, car_model, car_year }) => {
@@ -74,8 +72,15 @@ function loadIndexTable(data) {
         tableDetails += `<td scope='col'>${car_brand}</td>`;
         tableDetails += `<td scope='col'>${car_model}</td>`;
         tableDetails += `<td scope='col'>${car_year}</td>`;
+        tableDetails += `<td scope='col'><button onclick='deleteCar(${car_id})' type="button" class="btn btn-dark" id="delete2">Delete</button></td>`
         tableDetails += "</tbody>";
     })
 
     table.innerHTML = tableDetails;
+}
+
+function deleteCar(car_id) {
+    fetch("http://localhost:3000/delete/" + car_id, {})
+        .then(response => response.json())
+        .catch(err => console.log(err))
 }
